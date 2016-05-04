@@ -29,6 +29,8 @@ module type CONFIG = sig
     'a SimpleConfig.option_class ->
     'a ->
     'a SimpleConfig.config_option
+  val get_option_value : string list -> string
+  val save : unit -> unit
 end
 
 module DefaultConfig : CONFIG

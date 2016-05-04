@@ -33,6 +33,8 @@ module type CONFIG = sig
     'a SimpleConfig.option_class ->
     'a ->
     'a SimpleConfig.config_option
+  val get_option_value : string list -> string
+  val save : unit -> unit
 end
 
 module MakeConfig (C: ConfigArg) = struct
@@ -47,6 +49,13 @@ module MakeConfig (C: ConfigArg) = struct
       SimpleConfig.create_option config_file
           opt_names ?short_help long_help ?level
           opt_class default_value
+
+  let get_option_value option_name =
+    SimpleConfig.LowLevel.get_simple_option config_file option_name
+
+  let save () =
+    SimpleConfig.save_with_help config_file
+
   let () =
     SimpleConfig.load config_file
   end
